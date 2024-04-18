@@ -25,9 +25,9 @@ fetch("https://api.coingecko.com/api/v3/coins/dogecoin")
         `
 
         document.getElementById("crypto").innerHTML += `
-            <p>🎯: $${data.market_data.current_price.usd}</p>
-            <p>👆: $${data.market_data.high_24h.usd}</p>
-            <p>👇: $${data.market_data.low_24h.usd}</p>
+            <p>🎯: R${data.market_data.current_price.zar}</p>
+            <p>👆: R${data.market_data.high_24h.zar}</p>
+            <p>👇: R${data.market_data.low_24h.zar}</p>
         `
     })
     .catch(err => console.error(err))
@@ -39,3 +39,20 @@ fetch("https://api.coingecko.com/api/v3/coins/dogecoin")
 
  setInterval(getCurrentTime, 1000)
 
+ navigator.geolocation.getCurrentPosition(position => {
+    fetch(`https://apis.scrimba.com/openweathermap/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&units=metric`)
+.then(response => {
+    if (!response.ok){
+        throw Error("Weather data not available")
+    }return response.json()
+})
+.then(data => {
+const iconUrl = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`
+document.getElementById("weather").innerHTML = `
+    <img src=${iconUrl} />
+    <span class="temp">${Math.round(data.main.temp)} º</span>
+    <span class="city">${data.name}</span>
+`
+})
+.catch(err => console.log(err))
+})
