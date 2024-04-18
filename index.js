@@ -23,6 +23,7 @@ fetch("https://api.coingecko.com/api/v3/coins/dogecoin")
             <img src=${data.image.small} />
             <span>${data.name}</span>
         `
+
         document.getElementById("crypto").innerHTML += `
             <p>🎯: $${data.market_data.current_price.usd}</p>
             <p>👆: $${data.market_data.high_24h.usd}</p>
@@ -31,7 +32,10 @@ fetch("https://api.coingecko.com/api/v3/coins/dogecoin")
     })
     .catch(err => console.error(err))
 
-navigator.geolocation.getCurrentPosition()
-    .then(position => {
-        console.log(position)
-    })
+     function getCurrentTime() {
+     const date = new Date()
+    document.getElementById("time").innerHTML = date.toLocaleTimeString("en-ZA", {timeStyle: "short"})
+ }
+
+ setInterval(getCurrentTime, 1000)
+
